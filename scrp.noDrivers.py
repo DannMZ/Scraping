@@ -10,6 +10,10 @@ if not myUrl: raise ValueError("There'sn't url")
 else:print("Url exists")
 
 all_what_i_have=[]
+def is_valid_product(product_data):
+    # Перевіряємо, чи є хоча б щось
+    key_attributes = ["brand", "model", "regular_price"]
+    return any(product_data.get(attr) != "Nope" for attr in key_attributes)
 
 def extract_product_data(article:Tag):
     product_data = {}
@@ -104,7 +108,10 @@ def scrape_it(url:str,id:int):
         
         for card in product_cards:
             product_data = extract_product_data(card)
-            all_what_i_have.append(product_data)
+            if is_valid_product(product_data):
+                all_what_i_have.append(product_data)
+            else:
+                print(f"Пропущено невалідний запис: {product_data['id']}")
     else:
         print(f"Помилка: статус {response.status_code}")
 

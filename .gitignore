@@ -1,0 +1,6 @@
+/venv/*
+.venv/
+test/*
+.env
+.gitattributes
+.json
